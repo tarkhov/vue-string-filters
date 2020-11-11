@@ -1,1 +1,1 @@
-# vue-string-filters
+# Vue string filters
