@@ -167,4 +167,5 @@ docs/_book
 test/
 
 # Custom
-package-lock.json
+demo
+docs
