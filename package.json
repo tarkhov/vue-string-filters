@@ -15,8 +15,7 @@
     "nuxtjs",
     "filter",
     "string",
-    "form",
-    "input"
+    "template"
   ],
   "scripts": {
     "start": "rollup --config rollup.config.dev.js",
