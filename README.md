@@ -5,7 +5,6 @@ Vue string filters library can change template value dynamically. All languages 
 ### Contents
 
 1. [Compatibility](#compatibility)
-   1. [Version support](#version-support)
 2. [Installation](#installation)
    1. [NodeJS](#nodejs)
    2. [Manually](#manually)
@@ -22,15 +21,7 @@ Vue string filters library can change template value dynamically. All languages 
 
 Library | Version
 ------- | -------
-Vue | >= 2 and < 3
-
-We support browsers with ECMAScript 5 features, IE 10 and higher, more details can be founded here https://caniuse.com/es5 and here https://vuejs.org/v2/guide/installation.html#Compatibility-Note.
-
-### Version support
-
-Vue | Repo
-------- | -------
-2.x | [0.x](https://github.com/tarkhov/vue-string-filters/tree/0.x)
+Vue | >= 3.5
 
 ## Installation
 
@@ -42,10 +33,10 @@ npm install vue-string-filters
 
 ### Manually
 
-[Download](https://github.com/tarkhov/vue-string-filters/releases/download/v0.1.0/vue-string-filters.zip) package and unpack it or use following commands:
+[Download](https://github.com/tarkhov/vue-string-filters/releases/download/v1.0.0/vue-string-filters.zip) package and unpack it or use following commands:
 
 ```bash
-wget https://github.com/tarkhov/vue-string-filters/releases/download/v0.1.0/vue-string-filters.zip
+wget https://github.com/tarkhov/vue-string-filters/releases/download/v1.0.0/vue-string-filters.zip
 unzip vue-string-filters.zip
 ```
 
@@ -154,7 +145,7 @@ plugins: [
     <div id="app"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://cdn.rawgit.com/tarkhov/vue-string-filters/v0.1.0/dist/vue-string-filters.umd.min.js"></script>
+    <script src="https://cdn.rawgit.com/tarkhov/vue-string-filters/v1.0.0/dist/vue-string-filters.umd.min.js"></script>
   </body>
 </html>
 ```

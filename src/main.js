@@ -1,4 +1,3 @@
-import { createApp } from 'vue'
 import camel from './filters/camel'
 import capitalize from './filters/capitalize'
 import kebab from './filters/kebab'
@@ -26,10 +25,8 @@ const VueStringFilters = {
   }
 }
 
-const app = createApp({})
-app.use(VueStringFilters)
-
 export {
+  VueStringFilters,
   camel,
   capitalize,
   kebab,
@@ -42,5 +39,3 @@ export {
   upper,
   StringFiltersMixin
 }
-
-export default VueStringFilters
