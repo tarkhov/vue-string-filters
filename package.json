@@ -1,28 +1,48 @@
 {
   "name": "vue-string-filters",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Vue string filters library can change template value dynamically.",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
+  "types": "./dist/types/main.d.ts",
   "main": "./dist/vue-string-filters.umd.cjs",
   "module": "./dist/vue-string-filters.js",
   "exports": {
     ".": {
+      "types": "./dist/types/main.d.ts",
       "import": "./dist/vue-string-filters.js",
       "require": "./dist/vue-string-filters.umd.cjs"
     }
   },
   "keywords": [
-    "js",
-    "javascript",
     "vue",
     "vuejs",
+    "vue3",
     "nuxt",
     "nuxtjs",
-    "directive",
-    "string",
+    "vue-filter",
+    "filters",
+    "filter",
     "form",
-    "input"
+    "input",
+    "string",
+    "string-manipulation",
+    "text-formatting",
+    "trim",
+    "lowercase",
+    "uppercase",
+    "capitalize",
+    "slugify",
+    "truncate",
+    "utility",
+    "validation",
+    "transformation",
+    "sanitize",
+    "javascript",
+    "js",
+    "typescript"
   ],
   "repository": {
     "type": "git",
@@ -36,14 +56,17 @@
   "homepage": "https://tarkhov.github.io/vue-string-filters/",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && tsc",
     "preview": "vite preview"
   },
   "dependencies": {
+    "string-filters": "^0.3.6",
     "vue": "^3.5.24"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
-    "vite": "^7.2.4"
+    "typescript": "^5.9.3",
+    "vite": "^7.2.4",
+    "vite-plugin-banner": "^0.8.1"
   }
 }
