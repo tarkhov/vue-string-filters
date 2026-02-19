@@ -4,63 +4,71 @@
  * Copyright 2021-2026 Tarkhov
  * License: MIT
  */
-function a(n, t = !1) {
-  let l = n.charAt(0).toUpperCase(), e = n.slice(1);
-  return t && (e = e.toLowerCase()), `${l}${e}`;
+function u(e, l = !1) {
+  if (!e) return null;
+  let r = e.charAt(0).toUpperCase(), n = e.slice(1);
+  return l && (n = n.toLowerCase()), `${r}${n}`;
 }
-function o(n, t = { numbers: !1, lower: !1 }) {
-  const l = t?.numbers ? /[\p{L}\p{N}]+/gu : new RegExp("\\p{L}+", "gu");
-  let e = n.match(l);
-  if (e.length <= 1) return null;
-  let r = e.shift();
-  const u = t?.lower;
-  return u && (r = r.toLowerCase()), e = e.map((s) => a(s, u)), e.unshift(r), e.join("");
+function o(e, l = { numbers: !1, lower: !1 }) {
+  if (!e) return null;
+  const r = l?.numbers ? /[\p{L}\p{N}]+/gu : new RegExp("\\p{L}+", "gu");
+  let n = e.match(r);
+  if (!n || n.length <= 1) return null;
+  let t = n.shift();
+  const a = l?.lower;
+  return a && (t = t.toLowerCase()), n = n.map((s) => u(s, a)), n.unshift(t), n.join("");
 }
-function p(n, t = !1) {
-  let l = t ? /[\p{L}\p{N}]+/gu : new RegExp("\\p{L}+", "gu"), e = n.match(l);
-  return e.length <= 1 ? null : e.map((r) => r.toLowerCase()).join("");
+function i(e, l = !1) {
+  if (!e) return null;
+  let r = l ? /[\p{L}\p{N}]+/gu : new RegExp("\\p{L}+", "gu"), n = e.match(r);
+  return !n || n.length <= 1 ? null : n.map((t) => t.toLowerCase()).join("");
 }
-function i(n, t = !1) {
-  let l = t ? /[\p{L}\p{N}-]+/gu : /[\p{L}-]+/gu, e = n.match(l);
-  return e.length <= 1 ? null : e.map((r) => r.toLowerCase()).join("-");
+function p(e, l = !1) {
+  if (!e) return null;
+  let r = l ? /[\p{L}\p{N}-]+/gu : /[\p{L}-]+/gu, n = e.match(r);
+  return !n || n.length <= 1 ? null : n.map((t) => t.toLowerCase()).join("-");
 }
-function c(n, t, l = " ") {
-  const e = Math.floor((t - n.length) / 2) + n.length;
-  return n.padStart(e, l).padEnd(t, l);
+function f(e, l, r = " ") {
+  if (!e) return null;
+  const n = Math.floor((l - e.length) / 2) + e.length;
+  return e.padStart(n, r).padEnd(l, r);
 }
-function g(n, t = { numbers: !1, lower: !1 }) {
-  const l = t?.numbers ? /[\p{L}\p{N}]+/gu : new RegExp("\\p{L}+", "gu");
-  let e = n.match(l);
-  return e.length <= 1 ? null : e.map((r) => a(r, t?.lower)).join("");
+function c(e, l = { numbers: !1, lower: !1 }) {
+  if (!e) return null;
+  const r = l?.numbers ? /[\p{L}\p{N}]+/gu : new RegExp("\\p{L}+", "gu");
+  let n = e.match(r);
+  return !n || n.length <= 1 ? null : n.map((t) => u(t, l?.lower)).join("");
 }
-function f(n, t = !1) {
-  let l = t ? /[\p{L}\p{N}_]+/gu : /[\p{L}_]+/gu, e = n.match(l);
-  return e.length <= 1 ? null : e.map((r) => r.toLowerCase()).join("_");
+function g(e, l = !1) {
+  if (!e) return null;
+  let r = l ? /[\p{L}\p{N}_]+/gu : /[\p{L}_]+/gu, n = e.match(r);
+  return !n || n.length <= 1 ? null : n.map((t) => t.toLowerCase()).join("_");
 }
-function m(n, t = !1) {
-  return n.replace(new RegExp("\\p{L}+", "gu"), (l) => a(l, t));
+function m(e, l = !1) {
+  return e ? e.replace(new RegExp("\\p{L}+", "gu"), (r) => u(r, l)) : null;
 }
-function L(n, t = { numbers: !1, lower: !1 }) {
-  const l = t?.numbers ? /[\p{L}\p{N}-]+/gu : /[\p{L}-]+/gu;
-  let e = n.match(l);
-  return e.length <= 1 ? null : e.map((r) => a(r, t?.lower)).join("-");
+function h(e, l = { numbers: !1, lower: !1 }) {
+  if (!e) return null;
+  const r = l?.numbers ? /[\p{L}\p{N}-]+/gu : /[\p{L}-]+/gu;
+  let n = e.match(r);
+  return !n || n.length <= 1 ? null : n.map((t) => u(t, l?.lower)).join("-");
 }
-function h(n, t = 32, l = "...") {
-  return n.substring(0, t) + l;
+function L(e, l = 32, r = "...") {
+  return e ? e.substring(0, l) + r : null;
 }
 const w = {
-  install(n) {
-    n.config.globalProperties.$filters = {
+  install(e) {
+    e.config.globalProperties.$filters = {
       camelCase: o,
-      capitalize: a,
-      flatCase: p,
-      kebabCase: i,
-      pad: c,
-      pascalCase: g,
-      snakeCase: f,
+      capitalize: u,
+      flatCase: i,
+      kebabCase: p,
+      pad: f,
+      pascalCase: c,
+      snakeCase: g,
       titleCase: m,
-      trainCase: L,
-      truncate: h
+      trainCase: h,
+      truncate: L
     };
   }
 };

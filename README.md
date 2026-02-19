@@ -6,23 +6,25 @@ Vue string filters library can change template value dynamically. All languages 
 
 1. [Compatibility](#compatibility)
 2. [Installation](#installation)
-   1. [NPM](#npm)
-   2. [Manually](#manually)
+  1. [NPM](#npm)
 3. [Usage](#usage)
-   1. [Camel case](#camel-case)
-   2. [Capitalize](#capitalize)
-   3. [Flat case](#flat-case)
-   4. [Kebab case](#kebab-case)
-   5. [Lower case](#lower-case)
-   6. [Pad](#pad)
-   7. [Pascal case](#pascal-case)
-   8. [Repeat](#repeat)
-   9. [Replace](#replace)
-   10. [Snake case](#snake-case)
-   11. [Title case](#title-case)
-   12. [Train case](#train-case)
-   13. [Truncate](#truncate)
-   14. [Upper case](#upper-case)
+  1. [Global methods] (#global-methods)
+  2. [Computed properties] (#computed-properties)
+4. [Filters](#filters)
+  1. [Camel case](#camel-case)
+  2. [Capitalize](#capitalize)
+  3. [Flat case](#flat-case)
+  4. [Kebab case](#kebab-case)
+  5. [Lower case](#lower-case)
+  6. [Pad](#pad)
+  7. [Pascal case](#pascal-case)
+  8. [Repeat](#repeat)
+  9. [Replace](#replace)
+  10. [Snake case](#snake-case)
+  11. [Title case](#title-case)
+  12. [Train case](#train-case)
+  13. [Truncate](#truncate)
+  14. [Upper case](#upper-case)
 4. [Author](#author)
 5. [License](#license)
 
@@ -40,342 +42,504 @@ Vue | >= 3.5
 npm install vue-string-filters
 ```
 
-### Manually
-
-[Download](https://github.com/tarkhov/vue-string-filters/releases/download/v1.2.0/vue-string-filters.zip) package and unpack it or use following commands:
-
-```bash
-wget https://github.com/tarkhov/vue-string-filters/releases/download/v1.2.0/vue-string-filters.zip
-unzip vue-string-filters.zip
-```
-
 ## Usage
 
-Add following code to your `main.js` file created by Vue CLI:
+### Global methods
+
+Add the following code to the **main.js** file created with the Vue CLI if you want to use the filter methods globally:
 
 ```js
 import { createApp } from 'vue'
-import { VueStringDirectives } from 'vue-string-filters'
+import { VueStringFilters } from 'vue-string-filters'
 import App from './App.vue'
 
-const app = createApp(App)
-app.use(VueStringDirectives)
-app.mount('#app')
+createApp(App).use(VueStringFilters).mount('#app')
 ```
 
-Alternatively you can use a specific directive to import it into a specific component:
+Examples of usage global property **$filters** methods in your **App.vue**:
 
 ```js
-import { upper, lower } from 'vue-string-filters'
+import { ref } from 'vue'
 
-export default {
- directives: {
-   upper,
-   lower
-  }
-}
-```
-
-Also you can import all directives to component:
-
-```js
-import { StringDirectivesMixin } from 'vue-string-filters'
-
-export default {
- mixins: [StringDirectivesMixin]
-}
-```
-
-### Camel case
-
-```js
-const camel = defineModel('camel')
+const camelRef = ref('camel case')
 ```
 
 ```html
 <template>
-  <!-- Input: camel 123 case. Output: camelCase. -->
-  <input type="text" v-model="camel" v-camel>
+  <div>Result: {{ $filters.camelCase(camelRef) }}</div>
+</template>
+```
 
-  <!-- Input: camel 123 case. Output: camel123Case. -->
-  <input type="text" v-model="camel" v-camel.numbers>
-  <!-- Or -->
-  <input type="text" v-model="camel" v-camel="{ numbers: true }">
+### Computed properties
 
-  <!-- Input: cameL 123 casE. Output: camelCase. -->
-  <input type="text" v-model="camel" v-camel.lower>
-  <!-- Or -->
-  <input type="text" v-model="camel" v-camel="{ lower: true }">
+**Recommended way.** Using computed properties you don't need to register a **VueStringFilters** plugin in your **main.js**:
 
-  <!-- Input: cameL 123 casE. Output: camel123Case. -->
-  <input type="text" v-model="camel" v-camel.numbers.lower>
-  <!-- Or -->
-  <input type="text" v-model="camel" v-camel="{ numbers: true, lower: true }">
+```js
+import { createApp } from 'vue'
+import App from './App.vue'
+
+createApp(App).mount('#app')
+```
+
+Use a specific filter to import it into a specific component:
+
+```js
+import { computed, ref } from 'vue'
+import { camelCase } from 'string-filters'
+
+const camelRef = ref('camel case')
+const camelComputed = computed(_ => camelCase(camelRef.value))
+```
+
+```html
+<template>
+  <div>Result: {{ camelComputed }}</div>
+</template>
+```
+
+## Filters
+
+Complete list of presented filters to use in your app.
+
+### Camel case
+
+Example usage with global **$filters** methods:
+
+```html
+<template>
+  <!-- Output: camelCase -->
+  <div>{{ $filters.camelCase('camel 123 case') }}</div>
+
+  <!-- Output: camel123Case -->
+  <div>{{ $filters.camelCase('camel 123 case', { numbers: true }) }}</div>
+
+  <!-- Output: camelCase -->
+  <div>{{ $filters.camelCase('cameL 123 casE', { lower: true }) }}</div>
+
+  <!-- Output: camel123Case -->
+  <div>{{ $filters.camelCase('cameL 123 casE', { numbers: true, lower: true }) }}</div>
+</template>
+```
+
+Using computed property:
+
+```js
+import { computed, ref } from 'vue'
+import { camelCase } from 'string-filters'
+
+const camelRef = ref('camel case')
+const camelComputed = computed(_ => camelCase(camelRef.value))
+```
+
+```html
+<template>
+  <!-- Output: camelCase -->
+  <div>Result: {{ camelComputed }}</div>
 </template>
 ```
 
 ### Capitalize
 
+Example usage with global **$filters** methods:
+
+```html
+<template>
+  <!-- Output: Capitalize -->
+  <div>{{ $filters.capitalize('capitalize') }}</div>
+
+  <!-- Output: Capitalize -->
+  <div>{{ $filters.capitalize('cApitalizE', { lower: true }) }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const capitalize = defineModel('capitalize')
+import { computed, ref } from 'vue'
+import { capitalize } from 'string-filters'
+
+const capitalizeRef = ref('capitalize')
+const capitalizeComputed = computed(_ => capitalize(capitalizeRef.value))
 ```
 
 ```html
 <template>
-  <!-- Input: capitalize. Output: Capitalize. -->
-  <input type="text" v-model="capitalize" v-capitalize>
-
-  <!-- Input: cApitalizE. Output: Capitalize. -->
-  <input type="text" v-model="capitalize" v-capitalize.lower>
-  <!-- Or -->
-  <input type="text" v-model="capitalize" v-capitalize="{ lower: true }">
+  <!-- Output: Capitalize -->
+  <div>Result: {{ capitalizeComputed }}</div>
 </template>
 ```
 
 ### Flat case
 
+Example usage with global **$filters** methods:
+
+```html
+<template>
+   <!-- Output: flatcase -->
+  <div>{{ $filters.flatCase('Flat 123 Case') }}</div>
+
+  <!-- Output: flat123case -->
+  <div>{{ $filters.flatCase('Flat 123 Case', true) }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const flat = defineModel('flat')
+import { computed, ref } from 'vue'
+import { flatCase } from 'string-filters'
+
+const flatRef = ref('Flat 123 Case')
+const flatComputed = computed(_ => flatCase(flatRef.value))
 ```
 
 ```html
 <template>
-  <!-- Input: Flat 123 Case. Output: flatcase. -->
-  <input type="text" v-model="flat" v-flat>
-
-  <!-- Input: Flat 123 Case. Output: flat123case. -->
-  <input type="text" v-model="flat" v-flat.numbers>
-  <!-- Or -->
-  <input type="text" v-model="flat" v-flat="{ numbers: true }">
+  <!-- Output: flatcase -->
+  <div>Result: {{ flatComputed }}</div>
 </template>
 ```
 
 ### Kebab case
 
+Example usage with global **$filters** methods:
+
+```html
+<template>
+  <!-- Output: kebab-case -->
+  <div>{{ $filters.kebabCase('Kebab 123 Case') }}</div>
+
+  <!-- Output: kebab-123-case -->
+  <div>{{ $filters.kebabCase('Kebab 123 Case', true) }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const kebab = defineModel('kebab')
+import { computed, ref } from 'vue'
+import { kebabCase } from 'string-filters'
+
+const kebabRef = ref('Kebab 123 Case')
+const kebabComputed = computed(_ => kebabCase(kebabRef.value))
 ```
 
 ```html
 <template>
-  <!-- Input: Kebab 123 Case. Output: kebab-case. -->
-  <input type="text" v-model="kebab" v-kebab>
-
-  <!-- Input: Kebab 123 Case. Output: kebab-123-case. -->
-  <input type="text" v-model="kebab" v-kebab.numbers>
-  <!-- Or -->
-  <input type="text" v-model="kebab" v-kebab="{ numbers: true }">
+  <!-- Output: kebab-case -->
+  <div>{{ kebabComputed }}</div>
 </template>
 ```
 
 ### Lower case
 
+Example usage with default javascript method:
+
+```html
+<template>
+  <!-- Output: lowercase -->
+  <div>{{ 'LOWERCASE'.toLowerCase() }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const lower = defineModel('lower')
+import { computed, ref } from 'vue'
+
+const lowerRef = ref('LOWERCASE')
+const lowerComputed = computed(_ => lowerRef.value.toLowerCase())
 ```
 
 ```html
 <template>
-  <!-- Input: LOWERCASE. Output: lowercase. -->
-  <input type="text" v-model="lower" v-lower>
-
-  <!-- Input: LOWERCASE. Output: lOWERCASE. -->
-  <input type="text" v-model="lower" v-lower.first>
-  <!-- Or -->
-  <input type="text" v-model="lower" v-lower="{ first: true }">
+  <!-- Output: lowercase -->
+  <div>{{ lowerComputed }}</div>
 </template>
 ```
 
 ### Pad
 
+Example usage with global **$filters** methods:
+
+```html
+<template>
+  <!-- Output: ___pad____ -->
+  <div>{{ $filters.pad('pad', 10, '_') }}</div>
+
+  <!-- Output: _______pad -->
+  <div>{{ 'pad'.padStart(10, '_') }}</div>
+
+  <!-- Output: pad_______ -->
+  <div>{{ 'pad'.padStart(10, '_') }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const lower = defineModel('plowerd')
+import { computed, ref } from 'vue'
+import { pad } from 'string-filters'
+
+const padRef = ref('pad')
+const padComputed = computed(_ => pad(padRef.value, 10, '_'))
 ```
 
 ```html
 <template>
-  <!-- Input: pad. Output: ___pad____. -->
-  <input type="text" v-model="pad" v-pad:10="_">
-  <!-- Or -->
-  <input type="text" v-model="pad" v-pad="{ count: 10, chars: '_' }">
-
-  <!-- Input: pad. Output: _________pad. -->
-  <input type="text" v-model="pad" v-pad:10.start="_">
-  <!-- Or -->
-  <input type="text" v-model="pad" v-pad="{ count: 10, chars: '_', start: true }">
-
-  <!-- Input: pad. Output: pad_______. -->
-  <input type="text" v-model="pad" v-pad:10.end="_">
-  <!-- Or -->
-  <input type="text" v-model="pad" v-pad="{ count: 10, chars: '_', end: true }">
+  <!-- Output: ___pad____ -->
+  <div>{{ padComputed }}</div>
 </template>
 ```
 
 ### Pascal case
 
+Example usage with global **$filters** methods:
+
+```html
+<template>
+  <!-- Output: PascalCase -->
+  <div>{{ $filters.pascalCase('pascal 123 case') }}</div>
+
+  <!-- Output: Pascal123Case -->
+  <div>{{ $filters.pascalCase('pascal 123 case', { numbers: true }) }}</div>
+
+  <!-- Output: PascalCase -->
+  <div>{{ $filters.pascalCase('pascaL 123 casE', { lower: true }) }}</div>
+
+  <!-- Output: Pascal123Case -->
+  <div>{{ $filters.pascalCase('pascaL 123 casE', { numbers: true, lower: true }) }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const pascal = defineModel('pascal')
+import { computed, ref } from 'vue'
+import { pascalCase } from 'string-filters'
+
+const pascalRef = ref('pascal 123 case')
+const pascalComputed = computed(_ => pascalCase(pascalRef.value))
 ```
 
 ```html
 <template>
-  <!-- Input: pascal 123 case. Output: PascalCase. -->
-  <input type="text" v-model="pascal" v-pascal>
-
-  <!-- Input: pascal 123 case. Output: Pascal123Case. -->
-  <input type="text" v-model="pascal" v-pascal.numbers>
-  <!-- Or -->
-  <input type="text" v-model="pascal" v-pascal="{ numbers: true }">
-
-  <!-- Input: pascaL 123 casE. Output: PascalCase. -->
-  <input type="text" v-model="pascal" v-pascal.lower>
-  <!-- Or -->
-  <input type="text" v-model="pascal" v-pascal="{ lower: true }">
-
-  <!-- Input: pascaL 123 casE. Output: Pascal123Case. -->
-  <input type="text" v-model="pascal" v-pascal.numbers.lower>
-  <!-- Or -->
-  <input type="text" v-model="pascal" v-pascal="{ numbers: true, lower: true }">
+  <!-- Output: PascalCase -->
+  <div>{{ pascalComputed }}</div>
 </template>
 ```
 
 ### Repeat
 
+Example usage with default javascript method:
+
+```html
+<template>
+  <!-- Output: repeat----- -->
+  <div>repeat{{ '-'.repeat(5) }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const repeat = defineModel('repeat')
+import { computed, ref } from 'vue'
+
+const repeatRef = ref('repeat')
+const repeatComputed = computed(_ => repeatRef.value + '-'.repeat(5))
 ```
 
 ```html
 <template>
-  <!-- Input: repeat. Output: repeat-----. -->
-  <input type="text" v-model="repeat" v-repeat:5="-">
-  <!-- Or -->
-  <input type="text" v-model="repeat" v-repeat="{ count: 5, string: '-' }">
+  <!-- Output: repeat----- -->
+  <div>{{ repeatComputed }}</div>
 </template>
 ```
 
 ### Replace
 
+Example usage with default javascript method:
+
+```html
+<template>
+  <!-- Output: replace--- -->
+  <div>{{ 'replace123'.replace(new RegExp('[0-9]', 'g'), '-') }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const replace = defineModel('replace')
+import { computed, ref } from 'vue'
+
+const replaceRef = ref('replace123')
+const replaceComputed = computed(_ => replaceRef.value.replace(new RegExp('[0-9]', 'g'), '-'))
 ```
 
 ```html
 <template>
-  <!-- Input: replace123. Output: replace---. -->
-  <input type="text" v-model="replace" v-replace="{ regexp: '[0-9]', flags: 'g', string: '-' }">
+  <!-- Output: replace--- -->
+  <div>{{ replaceComputed }}</div>
 </template>
 ```
 
 ### Snake case
 
+Example usage with global **$filters** methods:
+
+```html
+<template>
+  <!-- Output: snake_case -->
+  <div>{{ $filters.snakeCase('Snake 123 Case') }}</div>
+
+  <!-- Output: snake_123_case -->
+  <div>{{ $filters.snakeCase('Snake 123 Case', true) }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const snake = defineModel('snake')
+import { computed, ref } from 'vue'
+import { snakeCase } from 'string-filters'
+
+const snakeRef = ref('Snake 123 Case')
+const snakeComputed = computed(_ => snakeCase(snakeRef.value))
 ```
 
 ```html
 <template>
-  <!-- Input: Snake 123 Case. Output: snake_case. -->
-  <input type="text" v-model="snake" v-snake>
-
-  <!-- Input: Snake 123 Case. Output: snake_123_case. -->
-  <input type="text" v-model="snake" v-snake.numbers>
-  <!-- Or -->
-  <input type="text" v-model="snake" v-snake="{ numbers: true }">
+  <!-- Output: snake_case -->
+  <div>{{ snakeComputed }}</div>
 </template>
 ```
 
 ### Title case
 
+Example usage with global **$filters** methods:
+
+```html
+<template>
+  <!-- Output: Title Case -->
+  <div>{{ $filters.titleCase('title 123 case') }}</div>
+
+  <!-- Output: Title 123 Case -->
+  <div>{{ $filters.titleCase('title 123 case', { numbers: true }) }}</div>
+
+  <!-- Output: Title Case -->
+  <div>{{ $filters.titleCase('titlE 123 casE', { lower: true }) }}</div>
+
+  <!-- Output: Title 123 Case -->
+  <div>{{ $filters.titleCase('titlE 123 casE', { numbers: true, lower: true }) }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const title = defineModel('title')
+import { computed, ref } from 'vue'
+import { titleCase } from 'string-filters'
+
+const titleRef = ref('title 123 case')
+const titleComputed = computed(_ => titleCase(titleRef.value))
 ```
 
 ```html
 <template>
-  <!-- Input: title 123 case. Output: Title Case. -->
-  <input type="text" v-model="title" v-title>
-
-  <!-- Input: title 123 case. Output: Title 123 Case. -->
-  <input type="text" v-model="title" v-title.numbers>
-  <!-- Or -->
-  <input type="text" v-model="title" v-title="{ numbers: true }">
-
-  <!-- Input: titlE 123 casE. Output: Title Case. -->
-  <input type="text" v-model="title" v-title.lower>
-  <!-- Or -->
-  <input type="text" v-model="title" v-title="{ lower: true }">
-
-  <!-- Input: titlE 123 casE. Output: Title 123 Case. -->
-  <input type="text" v-model="title" v-title.numbers.lower>
-  <!-- Or -->
-  <input type="text" v-model="title" v-title="{ numbers: true, lower: true }">
+  <!-- Output: Title Case -->
+  <div>{{ titleComputed }}</div>
 </template>
 ```
 
 ### Train case
 
+Example usage with global **$filters** methods:
+
+```html
+<template>
+  <!-- Output: Train-Case -->
+  <div>{{ $filters.trainCase('train 123 case') }}</div>
+
+  <!-- Output: Train-123-Case -->
+  <div>{{ $filters.trainCase('train 123 case', { numbers: true }) }}</div>
+
+  <!-- Output: Train-Case -->
+  <div>{{ $filters.trainCase('traiN 123 casE', { lower: true }) }}</div>
+
+  <!-- Output: Train-123-Case -->
+  <div>{{ $filters.trainCase('traiN 123 casE', { numbers: true, lower: true }) }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const train = defineModel('train')
+import { computed, ref } from 'vue'
+import { trainCase } from 'string-filters'
+
+const trainRef = ref('train 123 case')
+const trainComputed = computed(_ => trainCase(trainRef.value))
 ```
 
 ```html
 <template>
-  <!-- Input: train 123 case. Output: Train-Case. -->
-  <input type="text" v-model="train" v-train>
-
-  <!-- Input: train 123 case. Output: Train-123-Case. -->
-  <input type="text" v-model="train" v-train.numbers>
-  <!-- Or -->
-  <input type="text" v-model="train" v-train="{ numbers: true }">
-
-  <!-- Input: traiN 123 casE. Output: Train-Case. -->
-  <input type="text" v-model="train" v-train.lower>
-  <!-- Or -->
-  <input type="text" v-model="train" v-train="{ lower: true }">
-
-  <!-- Input: traiN 123 casE. Output: Train-123-Case. -->
-  <input type="text" v-model="train" v-train.numbers.lower>
-  <!-- Or -->
-  <input type="text" v-model="train" v-train="{ numbers: true, lower: true }">
+  <!-- Output: Train-Case -->
+  <div>{{ trainComputed }}</div>
 </template>
 ```
 
 ### Truncate
 
+Example usage with global **$filters** methods:
+
+```html
+<template>
+  <!-- Output: etc... -->
+  <div>{{ $filters.truncate('etcetera', 3, '...') }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const truncate = defineModel('truncate')
+import { computed, ref } from 'vue'
+import { truncate } from 'string-filters'
+
+const truncateRef = ref('etcetera')
+const truncateComputed = computed(_ => truncate(truncateRef.value, 3, '...'))
 ```
 
 ```html
 <template>
-  <!-- Input: truncate. Output: trunc... -->
-  <input type="text" v-model="truncate" v-truncate:5="'...'">
-  <!-- Or -->
-  <input type="text" v-model="truncate" v-truncate="{ count: 5, omission: '...' }">
+  <!-- Output: etc... -->
+  <div>{{ truncateComputed }}</div>
 </template>
 ```
 
 ### Upper case
 
+Example usage with default javascript method:
+
+```html
+<template>
+  <!-- Output: UPPERCASE -->
+  <div>{{ 'uppercase'.toUpperCase() }}</div>
+</template>
+```
+
+Using computed property:
+
 ```js
-const upper = defineModel('upper')
+import { computed, ref } from 'vue'
+
+const upperRef = ref('uppercase')
+const upperComputed = computed(_ => upperRef.value.toUpperCase())
 ```
 
 ```html
 <template>
-  <!-- Input: uppercase. Output: UPPERCASE. -->
-  <input type="text" v-model="upper" v-upper>
-
-  <!-- Input: uppercase. Output: Uppercase. -->
-  <input type="text" v-model="upper" v-upper.first>
-  <!-- Or -->
-  <input type="text" v-model="upper" v-upper="{ first: true }">
-
-  <!-- Input: uppercase one two three. Output: Uppercase One Two Three. -->
-  <input type="text" v-model="upper" v-upper.first.every>
-  <!-- Or -->
-  <input type="text" v-model="upper" v-upper="{ first: true, every: true }">
+  <!-- Output: UPPERCASE -->
+  <div>{{ upperComputed }}</div>
 </template>
 ```
 
