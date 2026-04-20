@@ -1,6 +1,6 @@
 {
   "name": "vue-string-filters",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue string filters library can change template value dynamically.",
   "type": "module",
   "files": [
